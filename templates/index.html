@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Sensive Blog — Home{% endblock %}
 {% block content %}
   <main class="site-main">
@@ -24,7 +25,11 @@
             <div class="flex-fill" style="margin-right: 30px;">
               <div class="card blog__slide text-center">
                 <div class="blog__slide__img">
-                  <img class="card-img rounded-0" src="{{ post.image_url }}" alt="Post picture">
+                  {% if post.image_url %}
+                    <img class="card-img rounded-0" src="{{ post.image_url }}" alt="Post picture">
+                  {% else %}
+                    <img class="card-img rounded-0" src="{% static 'img/banner/blog.png' %}" alt="Post picture">
+                  {% endif %}
                 </div>
                 <div class="blog__slide__content">
                   <h3><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h3>
@@ -46,7 +51,11 @@
           {% for post in fresh_posts %}
             <div class="single-recent-blog-post">
               <div class="thumb">
-                <img class="img-fluid" src="{{ post.image_url }}" alt="Post image">
+                {% if post.image_url %}
+                  <img class="img-fluid" src="{{ post.image_url }}" alt="Post picture">
+                {% else %}
+                  <img class="img-fluid" src="{% static 'img/banner/blog.png' %}" alt="Post picture">
+                {% endif %}
                 <ul class="thumb-info" style="max-width: 550px">
                   <li><a href="{% url 'post_detail' slug=post.slug %}"><i class="ti-user"></i>{{ post.author }}</a></li>
                   <li><a href="{% url 'post_detail' slug=post.slug %}"><i class="ti-notepad"></i>{{ post.published_at }}</a></li>
